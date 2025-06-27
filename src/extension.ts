@@ -7,8 +7,8 @@ let active = true;
 let testDecoration: vscode.TextEditorDecorationType;
 let descDecoration: vscode.TextEditorDecorationType;
 
-const testRegex = /\b(test|it)(\.(only|skip|concurrent))?\s*\(/g;
-const descRegex = /\b(test\.describe)(\.(only|skip|concurrent))?\s*\(/g;
+const testRegex = /^(?!\s*\/\/).*?test(\.beforeEach|\.beforeAll|\(\'.*\')/gm;
+const descRegex = /^(?!\s*\/\/).*?test\.describe\(\'.*\'/gm;
 
 function updateDecorationType() {
   if (testDecoration) {

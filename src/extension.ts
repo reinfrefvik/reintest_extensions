@@ -40,15 +40,28 @@ function updateDecorationType() {
 
 function updateDecorations(editor: vscode.TextEditor) {
   if (!active || !editor) {
-    editor.setDecorations(testDecoration, []);
-    editor.setDecorations(descDecoration, []);
+    if (testDecoration) {
+      editor.setDecorations(testDecoration, []);
+    }
+    if (descDecoration) {
+      editor.setDecorations(descDecoration, []);
+    }
     return;
   }
 
   if (!editor.document.fileName.endsWith(".spec.ts")) {
-    editor.setDecorations(testDecoration, []);
-    editor.setDecorations(descDecoration, []);
+    if (testDecoration) {
+      editor.setDecorations(testDecoration, []);
+    }
+    if (descDecoration) {
+      editor.setDecorations(descDecoration, []);
+    }
     return;
+  }
+
+  // Ensure decorations are initialized
+  if (!testDecoration || !descDecoration) {
+    updateDecorationType();
   }
 
   testRegex.lastIndex = 0;
@@ -112,6 +125,14 @@ export function activate(context: vscode.ExtensionContext) {
       }
     }),
 
+    // Handle when text documents are opened
+    vscode.workspace.onDidOpenTextDocument((document) => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor && editor.document === document) {
+        updateDecorations(editor);
+      }
+    }),
+
     vscode.commands.registerCommand("reintest.toggleTestHighlight", () => {
       active = !active;
       const editor = vscode.window.activeTextEditor;
@@ -129,10 +150,11 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  // initial decoration update for all visible editors
-  if (vscode.window.activeTextEditor) {
-    updateDecorations(vscode.window.activeTextEditor);
-  }
+  // Force update all visible editors immediately after activation
+  // This handles the case where files are already open when extension loads
+  vscode.window.visibleTextEditors.forEach(editor => {
+    updateDecorations(editor);
+  });
 }
 
 export function deactivate() {

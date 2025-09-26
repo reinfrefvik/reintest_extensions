@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
   // update types from config changes
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration("playwrightHighlighter.highlightColor")) {
+      if (e.affectsConfiguration("reintest")) {
         updateDecorationType();
         triggerUpdateAllVisibleEditors();
       }

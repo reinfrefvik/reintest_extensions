@@ -11,16 +11,10 @@ The extension automatically activates when you open `.spec.ts` files and highlig
 - **Describe blocks**: Lines containing `test.describe()` calls
 
 ### Toggle Highlighting
-You can turn highlighting on/off using the toggle command:
-1. Open the Command Palette (`Ctrl+Shift+P` on Windows/Linux, `Cmd+Shift+P` on Mac)
-2. Type "Toggle Highlight Tests in Spec Files" and press Enter
-3. The extension will show a message indicating whether highlighting is now enabled or disabled
+Toggle highlighting with the toggle command: "Toggle Highlight Tests in Spec Files" in the Command Pallette (`Ctrl+Shift+P` on Windows/Linux, `Cmd+Shift+P` on Mac)
 
 ### Customizing Colors
-You can customize the highlight colors through VS Code settings:
-1. Go to File > Preferences > Settings (or `Ctrl+,` / `Cmd+,`)
-2. Search for "reintest"
-3. Adjust the colors for test and describe block highlighting
+You can customize the highlight colors through VS Code settings under 'reintest':
 
 ## Extension Settings
 This extension contributes the following settings:
@@ -47,9 +41,35 @@ To run this extension in development mode:
 
 **Important**: Always test the extension on a separate project with TypeScript test files, not on this extension's source code.
 
+## Installing Locally
+
+To install this extension for use across all your projects without publishing to the marketplace:
+
+1. **Install vsce** (VS Code Extension manager):
+   ```bash
+   npm install -g @vscode/vsce
+   ```
+
+2. **Package the extension**:
+   ```bash
+   npm run vscode:prepublish
+   vsce package
+   ```
+   This creates a `.vsix` file (e.g., `reintest-0.0.3.vsix`)
+
+3. **Install the packaged extension**:
+   - **Via VS Code**: Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac), type "Extensions: Install from VSIX", and select your `.vsix` file
+   - **Via Command Line**: `code --install-extension reintest-0.x.x.vsix`
+
+4. **Restart VS Code** and the extension will be available in all your projects
+
+To update the extension later, repeat steps 2-4 with the new version.
+
 ## Known Issues
 Can conflict with other visual extensions.
 
-### 0.0.1
+### 0.1.0
 Early test release
 
+### 0.2.0
+Version with both test highlighter and block highlighter

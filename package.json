@@ -1,8 +1,8 @@
 {
   "name": "reintest",
   "displayName": "reintest",
-  "description": "text editor extension to highlight tests in spec files",
-  "version": "0.0.3",
+  "description": "text editor extension to highlight tests in spec files, and whole comment blocks",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.101.0"
   },
@@ -32,6 +32,11 @@
           "type": "string",
           "default": "rgba(226, 100, 240, 0.1)",
           "description": "Color for description highlighting in spec files."
+        },
+        "reintest.blockHighlightColor": {
+          "type": "string",
+          "default": "rgba(100, 240, 100, 0.05)",
+          "description": "Color for whole blocks spanning between comments."
         }
       }
     }
